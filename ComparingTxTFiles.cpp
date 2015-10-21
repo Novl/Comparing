@@ -83,15 +83,15 @@ int main(int args, char* argv[], char* envp[])
     LineNumFile1 = LineNumFile1 = 1;
     getline(File1, StrFile1, '\n');
     getline(File2, StrFile2, '\n');
-    while (!File1.eof() || !File2.eof())
+    while (!File1.eof() && !File2.eof())
     {
         while (StrFile1.compare(StrFile2)==0 && !File1.eof() && !File2.eof())
         {
             //cout<<"read "<<LineNum<<" line"<<endl;
-            FileResult<<StrFile1<<endl;
+            FileResult<<StrFile1<<endl<<endl;
             
-            do {getline(File1, StrFile1, '\n'); LineNumFile1++;} while (StrFile1.compare(" ")==0 || StrFile1.empty());
-            do {getline(File2, StrFile2, '\n'); LineNumFile2++;} while (StrFile2.compare(" ")==0 || StrFile2.empty());
+            do {getline(File1, StrFile1, '\n'); LineNumFile1++;} while (StrFile1.compare(" ")==0 || StrFile1.empty() && !File1.eof());
+            do {getline(File2, StrFile2, '\n'); LineNumFile2++;} while (StrFile2.compare(" ")==0 || StrFile2.empty() && !File2.eof());
         }
         if (!File1.eof() && !File2.eof())
         {
@@ -127,7 +127,7 @@ int main(int args, char* argv[], char* envp[])
                 if (OutFlag.compare("1")==0)
                 {
                     FileResult<<StrFile1<<endl;
-                    getline(File1, StrFile1, '\n');
+                    getline(File1, StrFile1, '\n');                        
                     LineNumFile1++;
                 }
                 else
@@ -193,6 +193,17 @@ int main(int args, char* argv[], char* envp[])
         }
     }    
     
+    while (!File1.eof())
+    {
+        FileResult<<StrFile1<<endl;
+        getline(File1, StrFile1, '\n');
+    }
+    
+    while (!File2.eof())
+    {
+        FileResult<<StrFile2<<endl;
+        getline(File2, StrFile2, '\n');
+    }
     
     cout<<"All done"<<endl;
     short_end:
